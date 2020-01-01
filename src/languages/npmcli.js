@@ -1,5 +1,5 @@
 /*
-Language: .NET Core CLI
+Language: NPM CLI
 */
   function dotnetcli(hljs) {
     var VAR = {
