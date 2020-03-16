@@ -121,7 +121,7 @@ export default function(hljs) {
         contains: [TAG_INTERNALS],
         starts: {
           end: '\<\/script\>', returnEnd: true,
-          subLanguage: ['cs', 'vbscript']
+          subLanguage: ['csharp', 'vbscript']
         }
       },
       {
