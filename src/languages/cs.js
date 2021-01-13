@@ -2,19 +2,17 @@
 Language: C#
 Author: Jason Diamond <jason@diamond.name>
 Contributor: Nicolas LLOBERA <nllobera@gmail.com>, Pieter Vantorre <pietervantorre@gmail.com>
-Website: https://docs.microsoft.com/en-us/dotnet/csharp/
 Category: common
 */
 
-/** @type LanguageFn */
-export default function(hljs) {
+function(hljs) {
   var KEYWORDS = {
     keyword:
       // Normal keywords.
       'abstract as base bool break byte case catch char checked const continue decimal ' +
       'default delegate do double enum event explicit extern finally fixed float ' +
-      'for foreach goto if implicit in init int interface internal is lock long ' +
-      'object operator out override params private protected public readonly ref sbyte ' +
+      'for foreach goto if implicit in int interface internal init is lock long ' +
+      'object operator out override params private protected public readonly record ref sbyte ' +
       'sealed short sizeof stackalloc static string struct switch this try typeof ' +
       'uint ulong unchecked unsafe ushort using virtual void volatile while ' +
       // Contextual keywords.
@@ -23,7 +21,6 @@ export default function(hljs) {
     literal:
       'null false true'
   };
-  var TITLE_MODE = hljs.inherit(hljs.TITLE_MODE, {begin: '[a-zA-Z](\\.?\\w)*'});
   var NUMBERS = {
     className: 'number',
     variants: [
@@ -88,25 +85,10 @@ export default function(hljs) {
     ]
   };
 
-  var GENERIC_MODIFIER = {
-    begin: "<",
-    end: ">",
-    contains: [ 
-      { beginKeywords: "in out"},
-      TITLE_MODE 
-    ]
-  };
   var TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
-  var AT_IDENTIFIER = {
-    // prevents expressions like `@class` from incorrect flagging
-    // `class` as a keyword
-    begin: "@" + hljs.IDENT_RE,
-    relevance: 0
-  };
 
   return {
-    name: 'C#',
-    aliases: ['cs', 'c#'],
+    aliases: ['csharp', 'c#'],
     keywords: KEYWORDS,
     illegal: /::/,
     contains: [
@@ -148,9 +130,7 @@ export default function(hljs) {
         beginKeywords: 'class interface', end: /[{;=]/,
         illegal: /[^\s:,]/,
         contains: [
-          { beginKeywords: "where class" },
-          TITLE_MODE,
-          GENERIC_MODIFIER,
+          hljs.TITLE_MODE,
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
         ]
@@ -159,17 +139,7 @@ export default function(hljs) {
         beginKeywords: 'namespace', end: /[{;=]/,
         illegal: /[^\s:]/,
         contains: [
-          TITLE_MODE,
-          hljs.C_LINE_COMMENT_MODE,
-          hljs.C_BLOCK_COMMENT_MODE
-        ]
-      },
-      {
-        beginKeywords: 'record', end: /[{;=]/,
-        illegal: /[^\s:]/,
-        contains: [
-          TITLE_MODE,
-          GENERIC_MODIFIER,
+          hljs.inherit(hljs.TITLE_MODE, {begin: '[a-zA-Z](\\.?\\w)*'}),
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
         ]
@@ -179,7 +149,12 @@ export default function(hljs) {
         className: 'meta',
         begin: '^\\s*\\[', excludeBegin: true, end: '\\]', excludeEnd: true,
         contains: [
-          {className: 'meta-string', begin: /"/, end: /"/}
+          INTERPOLATED_VERBATIM_STRING_NO_LF,
+          INTERPOLATED_STRING,
+          VERBATIM_STRING_NO_LF,
+          hljs.APOS_STRING_MODE,
+          hljs.QUOTE_STRING_MODE,
+          hljs.C_NUMBER_MODE
         ]
       },
       {
@@ -190,16 +165,13 @@ export default function(hljs) {
       },
       {
         className: 'function',
-        begin: '(' + TYPE_IDENT_RE + '\\s+)+' + hljs.IDENT_RE + '\\s*(\\<.+\\>)?\\s*\\(', returnBegin: true,
+        begin: '(' + TYPE_IDENT_RE + '\\s+)+' + hljs.IDENT_RE + '\\s*\\(', returnBegin: true,
         end: /\s*[{;=]/, excludeEnd: true,
         keywords: KEYWORDS,
         contains: [
           {
-            begin: hljs.IDENT_RE + '\\s*(\\<.+\\>)?\\s*\\(', returnBegin: true,
-            contains: [
-              hljs.TITLE_MODE,
-              GENERIC_MODIFIER
-            ],
+            begin: hljs.IDENT_RE + '\\s*\\(', returnBegin: true,
+            contains: [hljs.TITLE_MODE],
             relevance: 0
           },
           {
@@ -218,8 +190,7 @@ export default function(hljs) {
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
         ]
-      },
-      AT_IDENTIFIER
+      }
     ]
   };
 }
