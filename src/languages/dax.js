@@ -2,7 +2,7 @@
 Language: Data Analysis Expressions (DAX)
 Author: Stanislaw Swierc <stanislaw.swierc@gmail.com>
 Description: Data Analysis Expressions (DAX) is a library of functions and operators that can be combined to build formulas and expressions in Microsoft SQL Server Analysis Services, Power Pivot in Excel, and Power BI Desktop.
-Website: https://msdn.microsoft.com/en-us/library/ee634217.aspx
+Website: https://docs.microsoft.com/dax/
 Category: scientific
 */
 
@@ -44,7 +44,7 @@ function(hljs) {
             'PERCENTILEX.INC PERMUT PI POISSON.DIST POWER PREVIOUSDAY|10 PREVIOUSMONTH|10 ' +
             'PREVIOUSQUARTER|10 PREVIOUSYEAR|10 PRODUCT PRODUCTX QUOTIENT RADIANS RAND ' +
             'RANDBETWEEN RANK.EQ RANKX RELATED RELATEDTABLE|10 REPLACE REPT RIGHT ROUND ' +
-            'ROUNDDOWN ROUNDUP ROW SAMEPERIODLASTYEAR|10 SAMPLE SEARCH SECOND SIGN SIN ' +
+            'ROUNDDOWN ROUNDUP ROW SAMEPERIODLASTYEAR|10 SAMPLE SEARCH SECOND SELECTEDVALUE SIGN SIN ' +
             'SINH SQRT SQRTPI STARTOFMONTH|10 STARTOFQUARTER|10 STARTOFYEAR|10 STDEV.P STDEV.S ' +
             'STDEVX.P STDEVX.S SUBSTITUTE SUBSTITUTEWITHINDEX|10 SUM SUMMARIZE ' +
             'SUMMARIZECOLUMNS|10 SUMX SWITCH TAN TANH TIME TIMEVALUE TODAY TOPN TOTALMTD|10 ' +
