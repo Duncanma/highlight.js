@@ -16,7 +16,7 @@ function(hljs) {
     //datatypes
               'Int BigInt Unit Double Bool String Qubit Pauli Result Range Callable Array',
     constant: 'true false PauliI PauliX PauliY PauliZ One Zero',
-    control: 'if elif else repeat until fixup for in .. return fail',
+    control: 'if elif else repeat until fixup for in .. return fail while',
     helper: 'Message Length Assert AssertProb AssertEqual Random Floor Float ' +
     'Start Step Stop X Y Z H HY S T SWAP CNOT CCNOT MultiX R RFrac Rx Ry Rz R1 R1Frac ' +
     'Exp ExpFrac Measure M MultiM'
