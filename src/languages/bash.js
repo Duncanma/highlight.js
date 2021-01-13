@@ -50,8 +50,8 @@ function(hljs) {
         'break cd continue eval exec exit export getopts hash pwd readonly return shift test times ' +
         'trap umask unset ' +
         // Bash built-ins
-        'alias bind builtin caller command declare echo enable help let local logout mapfile printf ' +
-        'read readarray source type typeset ulimit unalias ' +
+        'alias bind builtin caller command declare echo enable help let local logout ls mapfile mkdir printf ' +
+        'read readarray source touch type typeset ulimit unalias ' +
         // Shell modifiers
         'set shopt ' +
         // Zsh built-ins
