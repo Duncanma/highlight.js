@@ -1,6 +1,6 @@
 /*
 Language: CSHTML
-Requires: xml.js, cs.js
+Requires: xml.js, csharp.js
 Author: Roman Resh <romanresh@live.com>
 Category: common
 */
@@ -66,7 +66,7 @@ function(hljs) {
         begin: "@[a-zA-Z]+",
         returnBegin: true,
         end: "(\\r|\\n|<|\\s)",
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         contains: [
             {
                 begin: '@',
@@ -87,7 +87,7 @@ function(hljs) {
     var ONE_LINE_AWAIT = {
         begin: "@await ",
         returnBegin: true,
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         end: "(\\r|\\n|<|\\s)",
         contains: [
             {
@@ -106,7 +106,7 @@ function(hljs) {
         end: "\\)",
         returnBegin: true,
         returnEnd: true,
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         contains: [
             {
                 begin: "@\\(",
@@ -115,7 +115,7 @@ function(hljs) {
             {
                 begin: "\\(",
                 end: "\\)",
-                subLanguage: 'cs',
+                subLanguage: 'csharp',
                 contains: [hljs.QUOTE_STRING_MODE, BLOCK_TEXT, 'self']
             },
             BLOCK_TEXT,
@@ -132,7 +132,7 @@ function(hljs) {
         returnBegin: true,
         returnEnd: true,
         end: "\\}",
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         contains: [
             {
                 begin: "@\\{",
@@ -203,7 +203,7 @@ function(hljs) {
                             return {
                                 begin: v.begin.substr(1, v.begin.length - 2)
                             }; }), 
-                         subLanguage: "cs" },
+                         subLanguage: "csharp" },
                      { begin: "{", className: SPECIAL_SYMBOL_CLASSNAME }
                 ]
             },
@@ -238,7 +238,7 @@ function(hljs) {
                                 begin: "[\\s]*else[\\s]*",
                             },
                         ],
-                        subLanguage: "cs"
+                        subLanguage: "csharp"
                     },
                     {
                         begin: "{",
@@ -260,7 +260,7 @@ function(hljs) {
         end: "}",
         returnBegin: true,
         returnEnd: true,
-        subLanguage: "cs",
+        subLanguage: "csharp",
         contains: [
             {
                 begin: "@",
@@ -268,7 +268,7 @@ function(hljs) {
             },
             {
                 begin: "try[\\s]*{",
-                subLanguage: "cs"
+                subLanguage: "csharp"
             },
             {
                 begin: "{",
@@ -299,7 +299,7 @@ function(hljs) {
                                 begin: "[\\s]*finally[\\s]*",
                             },
                         ],
-                        subLanguage: "cs"
+                        subLanguage: "csharp"
                     },
                     {
                         begin: "{",
@@ -320,7 +320,7 @@ function(hljs) {
         end: "}",
         returnBegin: true,
         returnEnd: true,
-        subLanguage: "cs",
+        subLanguage: "csharp",
         contains: [
             {
                 begin: "@functions[\\s]*{",
@@ -365,7 +365,7 @@ function(hljs) {
 
     return {
         subLanguage: 'xml',
-        aliases: ['razor'],
+        aliases: ['cshtml', 'razor'],
         contains: [
             hljs.COMMENT("@\\*", "\\*@"),
             EXCEPTIONS,

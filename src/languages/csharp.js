@@ -1,25 +1,135 @@
 /*
 Language: C#
 Author: Jason Diamond <jason@diamond.name>
-Contributor: Nicolas LLOBERA <nllobera@gmail.com>, Pieter Vantorre <pietervantorre@gmail.com>
+Contributor: Nicolas LLOBERA <nllobera@gmail.com>, Pieter Vantorre <pietervantorre@gmail.com>, David Pine <david.pine@microsoft.com>
 Category: common
 */
 
 function(hljs) {
+  var BUILT_IN_KEYWORDS = [
+      'bool',
+      'byte',
+      'char',
+      'decimal',
+      'delegate',
+      'double',
+      'dynamic',
+      'enum',
+      'float',
+      'int',
+      'long',
+      'nint',
+      'nuint',
+      'object',
+      'sbyte',
+      'short',
+      'string',
+      'ulong',
+      'unit',
+      'ushort'
+  ];var LITERAL_KEYWORDS = [
+      'default',
+      'false',
+      'null',
+      'true'
+  ];
+  var NORMAL_KEYWORDS = [
+    'abstract',
+    'as',
+    'base',
+    'break',
+    'case',
+    'class',
+    'const',
+    'continue',
+    'do',
+    'else',
+    'event',
+    'explicit',
+    'extern',
+    'finally',
+    'fixed',
+    'for',
+    'foreach',
+    'goto',
+    'if',
+    'implicit',
+    'in',
+    'interface',
+    'internal',
+    'is',
+    'lock',
+    'namespace',
+    'new',
+    'operator',
+    'out',
+    'override',
+    'params',
+    'private',
+    'protected',
+    'public',
+    'readonly',
+    'record',
+    'ref',
+    'return',
+    'sealed',
+    'sizeof',
+    'stackalloc',
+    'static',
+    'struct',
+    'switch',
+    'this',
+    'throw',
+    'try',
+    'typeof',
+    'unchecked',
+    'unsafe',
+    'using',
+    'virtual',
+    'void',
+    'volatile',
+    'while'
+  ];
+  var CONTEXTUAL_KEYWORDS = [
+    'add',
+    'alias',
+    'and',
+    'ascending',
+    'async',
+    'await',
+    'by',
+    'descending',
+    'equals',
+    'from',
+    'get',
+    'global',
+    'group',
+    'init',
+    'into',
+    'join',
+    'let',
+    'nameof',
+    'not',
+    'notnull',
+    'on',
+    'or',
+    'orderby',
+    'partial',
+    'remove',
+    'select',
+    'set',
+    'unmanaged',
+    'value',
+    'var',
+    'when',
+    'where',
+    'with',
+    'yield'
+  ];
   var KEYWORDS = {
-    keyword:
-      // Normal keywords.
-      'abstract as base bool break byte case catch char checked const continue decimal ' +
-      'default delegate do double enum event explicit extern finally fixed float ' +
-      'for foreach goto if implicit in int interface internal init is lock long ' +
-      'object operator out override params private protected public readonly record ref sbyte ' +
-      'sealed short sizeof stackalloc static string struct switch this try typeof ' +
-      'uint ulong unchecked unsafe ushort using virtual void volatile while ' +
-      // Contextual keywords.
-      'add alias ascending async await by descending dynamic equals from get global group into join ' +
-      'let nameof on orderby partial remove select set value var when where yield',
-    literal:
-      'null false true'
+    keyword: NORMAL_KEYWORDS.concat(CONTEXTUAL_KEYWORDS).join(' '),
+    built_in: BUILT_IN_KEYWORDS.join(' '),
+    literal: LITERAL_KEYWORDS.join(' ')
   };
   var NUMBERS = {
     className: 'number',
@@ -88,7 +198,7 @@ function(hljs) {
   var TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
 
   return {
-    aliases: ['csharp', 'c#'],
+    aliases: ['cs', 'c#'],
     keywords: KEYWORDS,
     illegal: /::/,
     contains: [
