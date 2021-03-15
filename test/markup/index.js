@@ -17,16 +17,15 @@ function testLanguage(language) {
       const testName   = path.basename(filename, '.expect.txt'),
             sourceName = filename.replace(/\.expect/, '');
 
-      it(`should markup ${testName}`, function(done) {
-        const sourceFile   = fs.readFileAsync(sourceName, 'utf-8'),
-              expectedFile = fs.readFileAsync(filename, 'utf-8');
+      it(`should markup ${testName}`, async function() {
+        const sourceFile   = await fs.readFileAsync(sourceName, 'utf-8'),
+              expectedFile = await fs.readFileAsync(filename, 'utf-8');
 
-        bluebird.join(sourceFile, expectedFile, function(source, expected) {
-          const actual = hljs.highlight(language, source).value;
-
-          actual.trim().should.equal(expected.trim());
-          done();
-        });
+        const actual = hljs.highlight(language, sourceFile).value;
+        
+        actual.trim().should.equal(
+          expectedFile.trim(),
+          `The ${sourceName} differs from the actual:\n\n${actual.trim()}`);
       });
     });
   });

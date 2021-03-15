@@ -11,11 +11,10 @@ describe('.getLanguage()', function() {
   });
 
   it('should get the cshtml language by razor alias', function() {
-    // const result = hljs.getLanguage('razor');
+    const result = hljs.getLanguage('razor');
 
-    // result.should.be.instanceOf(Object);
-    // result.should.have.property('aliases').with.containEql('cshtml');
-    // should.strictEqual(result, hljs.getLanguage('cshtml'))
+    result.should.be.instanceOf(Object);
+    result.should.have.property('aliases').with.containEql('cshtml');
   });
 
   it('should be case insensitive', function() {

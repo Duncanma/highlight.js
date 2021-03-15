@@ -6,7 +6,7 @@ Category: common
 */
 
 function(hljs) {
-  var BUILT_IN_KEYWORDS = [
+  const BUILT_IN_KEYWORDS = [
       'bool',
       'byte',
       'char',
@@ -27,13 +27,14 @@ function(hljs) {
       'ulong',
       'unit',
       'ushort'
-  ];var LITERAL_KEYWORDS = [
+  ];
+  const LITERAL_KEYWORDS = [
       'default',
       'false',
       'null',
       'true'
   ];
-  var NORMAL_KEYWORDS = [
+  const NORMAL_KEYWORDS = [
     'abstract',
     'as',
     'base',
@@ -90,7 +91,7 @@ function(hljs) {
     'volatile',
     'while'
   ];
-  var CONTEXTUAL_KEYWORDS = [
+  const CONTEXTUAL_KEYWORDS = [
     'add',
     'alias',
     'and',
@@ -126,12 +127,12 @@ function(hljs) {
     'with',
     'yield'
   ];
-  var KEYWORDS = {
+  const KEYWORDS = {
     keyword: NORMAL_KEYWORDS.concat(CONTEXTUAL_KEYWORDS).join(' '),
     built_in: BUILT_IN_KEYWORDS.join(' '),
     literal: LITERAL_KEYWORDS.join(' ')
   };
-  var NUMBERS = {
+  const NUMBERS = {
     className: 'number',
     variants: [
       { begin: '\\b(0b[01\']+)' },
@@ -140,30 +141,30 @@ function(hljs) {
     ],
     relevance: 0
   };
-  var VERBATIM_STRING = {
+  const VERBATIM_STRING = {
     className: 'string',
     begin: '@"', end: '"',
     contains: [{begin: '""'}]
   };
-  var VERBATIM_STRING_NO_LF = hljs.inherit(VERBATIM_STRING, {illegal: /\n/});
-  var SUBST = {
+  const VERBATIM_STRING_NO_LF = hljs.inherit(VERBATIM_STRING, {illegal: /\n/});
+  const SUBST = {
     className: 'subst',
     begin: '{', end: '}',
     keywords: KEYWORDS
   };
-  var SUBST_NO_LF = hljs.inherit(SUBST, {illegal: /\n/});
-  var INTERPOLATED_STRING = {
+  const SUBST_NO_LF = hljs.inherit(SUBST, {illegal: /\n/});
+  const INTERPOLATED_STRING = {
     className: 'string',
     begin: /\$"/, end: '"',
     illegal: /\n/,
     contains: [{begin: '{{'}, {begin: '}}'}, hljs.BACKSLASH_ESCAPE, SUBST_NO_LF]
   };
-  var INTERPOLATED_VERBATIM_STRING = {
+  const INTERPOLATED_VERBATIM_STRING = {
     className: 'string',
     begin: /\$@"/, end: '"',
     contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST]
   };
-  var INTERPOLATED_VERBATIM_STRING_NO_LF = hljs.inherit(INTERPOLATED_VERBATIM_STRING, {
+  const INTERPOLATED_VERBATIM_STRING_NO_LF = hljs.inherit(INTERPOLATED_VERBATIM_STRING, {
     illegal: /\n/,
     contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST_NO_LF]
   });
@@ -185,7 +186,7 @@ function(hljs) {
     NUMBERS,
     hljs.inherit(hljs.C_BLOCK_COMMENT_MODE, {illegal: /\n/})
   ];
-  var STRING = {
+  const STRING = {
     variants: [
       INTERPOLATED_VERBATIM_STRING,
       INTERPOLATED_STRING,
@@ -195,7 +196,7 @@ function(hljs) {
     ]
   };
 
-  var TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
+  const TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
 
   return {
     aliases: ['cs', 'c#'],
