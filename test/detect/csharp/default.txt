@@ -1,16 +1,44 @@
-using System.IO.Compression;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+
+using static System.Console;
 
 #pragma warning disable 414, 3021
 
 namespace MyApplication
 {
-    [Obsolete("...")]
+    [Obsolete("...")] // This is really old, do something else!
     class Program : IInterface
     {
-        public static List<int> JustDoIt(int count)
+        void Main()
         {
-            Console.WriteLine($"Hello {Name}!");
-            return new List<int>(new int[] { 1, 2, 3 })
+            using HttpClient client = new();
+
+            Person david = new("David", "Pine")
+            {
+                Age = 36
+            };
+
+            _ = JustDoIt(david);
+            _ = JustDoIt(david with { LastName = "Fowler" });
         }
+
+        /// <summary>
+        /// This is a test, only a test.
+        /// </summary>
+        public static List<int> JustDoIt(Person person)
+        {
+            WriteLine($"Hello {Name}!");
+
+            return new List<int>(new int[] { 1, 2, 3 });
+        }
+    }
+
+    public record Person(
+        string FirstName,
+        string LastName)
+    {
+        public int Age { get; init; }
     }
 }
