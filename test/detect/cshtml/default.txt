@@ -3,7 +3,25 @@
 @model Person
 @namespace RazorPagesContacts.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@removeTagHelper "Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper, Microsoft.AspNetCore.Mvc.TagHelpers"
+@tagHelperPrefix th:
 @attribute [Authorize]
+
+@page "/ParentComponent"
+
+<h1>Parent-child example</h1>
+
+<ChildComponent Title="Panel Title from Parent"
+                OnClickCallback="@ShowMessage">
+    Content of the child component is supplied
+    by the parent component.
+</ChildComponent>
+
+<input id="useAttributesDict" @attributes="InputAttributes" />
+
+<p>
+    <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+</p>
 
 @{
     ViewData["Title"] = "Bootstrap Editors";
@@ -15,22 +33,275 @@
     else {
         @using(Html.BeginForm(FormMethod.Post)) {
             <div class="form-group">
-                @(Html.DevExpress()
-                    .BootstrapTextBoxFor(m => m.UserName))
+                @Html.DevExpress()
+                     .BootstrapTextBoxFor(m => m.UserName)
             </div>
             <div class="form-group">
-                @(Html.DevExpress()
-                    .BootstrapTextBoxFor(m => m.Password)
-                    .Password(true))
+                @Html.DevExpress()
+                     .BootstrapTextBoxFor(m => m.Password)
+                     .Password(true)
             </div>
             <div class="form-group">
-                @(Html.DevExpress()
-                    .BootstrapButton("Register")
-                    .Text("Register")
-                    .UseSubmitBehavior(true)
-                    .SettingsBootstrap(settings => settings.RenderOption(BootstrapRenderOption.Primary))
-                    .CssClasses(classes => classes.Control("form-control")))
+                @Html.DevExpress()
+                     .BootstrapButton("Register")
+                     .Text("Register")
+                     .UseSubmitBehavior(true)
+                     .SettingsBootstrap(settings => settings.RenderOption(BootstrapRenderOption.Primary))
+                     .CssClasses(classes => classes.Control("form-control"))
             </div>
         }
     }
 </div>
+
+<p>@await DoSomething("hello", "world")</p>
+<p>@GenericMethod<int>()</p>
+
+@for (var i = 0; i < people.Length; i++)
+{
+    var person = people[i];
+    <text>Name: @person.Name</text>
+}
+
+
+@if (value % 2 == 0)
+{
+    <p>The value was even.</p>
+}
+else if (value >= 1337)
+{
+    <p>The value is large.</p>
+}
+else
+{
+    <p>The value is odd and small.</p>
+}
+
+
+@switch (value)
+{
+    case 1:
+        <p>The value is 1!</p>
+        break;
+    case 1337:
+        <p>Your number is 1337!</p>
+        break;
+    default:
+        <p>Your number wasn't 1 or 1337.</p>
+        break;
+}
+
+
+@{ var i = 0; }
+@while (i < people.Length)
+{
+    var person = people[i];
+    <p>Name: @person.Name</p>
+    <p>Age: @person.Age</p>
+
+    i++;
+}
+
+
+@{ var i = 0; }
+@do
+{
+    var person = people[i];
+    <p>Name: @person.Name</p>
+    <p>Age: @person.Age</p>
+
+    i++;
+} while (i < people.Length);
+
+
+@try
+{
+    throw new InvalidOperationException("You did something invalid.");
+}
+catch (Exception ex)
+{
+    <p>The exception message: @ex.Message</p>
+}
+finally
+{
+    <p>The finally statement.</p>
+}
+
+
+@page "/todo"
+
+<h3>Todo</h3>
+
+<ul>
+    @foreach (var todo in todos)
+    {
+        <li>@todo.Title</li>
+    }
+</ul>
+
+@functions {
+    private IList<TodoItem> todos = new List<TodoItem>();
+}
+
+
+@typeparam TItem
+
+<table class="table">
+    <thead>
+        <tr>@TableHeader</tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Items)
+        {
+            <tr>@RowTemplate(item)</tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public RenderFragment TableHeader { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> RowTemplate { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<TItem> Items { get; set; }
+}
+
+
+@foreach (var person in People)
+{
+    <DetailsEditor @key="person" Details="@person.Details" />
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<Person> People { get; set; }
+}
+
+
+<p>
+    <input @bind="currentValue" /> Current value: @currentValue
+</p>
+
+<p>
+    <input @bind="CurrentValue" /> Current value: @CurrentValue
+</p>
+
+@code {
+    private string currentValue;
+    private string CurrentValue { get; set; }
+}
+
+
+<input value="@CurrentValue"
+    @onchange="@((ChangeEventArgs __e) => CurrentValue = 
+        __e.Value.ToString())" />
+
+@code {
+    private string CurrentValue { get; set; }
+}
+
+
+<input @bind="CurrentValue" @bind:event="oninput" />
+
+@code {
+    private string CurrentValue { get; set; }
+}
+
+
+<CustomLoginDialog @ref="loginDialog" ... />
+
+@code {
+    private CustomLoginDialog loginDialog;
+
+    private void OnSomething()
+    {
+        loginDialog.Show();
+    }
+}
+
+
+<input @bind="startDate" @bind:format="yyyy-MM-dd" />
+
+@code {
+    private DateTime startDate = new DateTime(2020, 1, 1);
+}
+
+
+<Child @bind-Year="year" @bind-Year:event="YearChanged" />
+
+
+<div class="border rounded m-1 p-1">
+    <h2>Child Component</h2>
+
+    <p>Child Message: <b>@ChildMessage</b></p>
+
+    <p>
+        <button @onclick="ChangeValue">Change from Child</button>
+    </p>
+
+    <GrandchildComponent @bind-GrandchildMessage="BoundValue" />
+</div>
+
+@code {
+    [Parameter]
+    public string ChildMessage { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ChildMessageChanged { get; set; }
+
+    private string BoundValue
+    {
+        get => ChildMessage;
+        set => ChildMessageChanged.InvokeAsync(value);
+    }
+
+    private async Task ChangeValue()
+    {
+        await ChildMessageChanged.InvokeAsync(
+            $"Set in Child {DateTime.Now}");
+    }
+}
+
+
+<input value="@count" @onkeypress="KeyHandler" @onkeypress:preventDefault />
+
+@code {
+    private int count = 0;
+
+    private void KeyHandler(KeyboardEventArgs e)
+    {
+        if (e.Key == "+")
+        {
+            count++;
+        }
+    }
+}
+
+
+<label>
+    <input @bind="stopPropagation" type="checkbox" />
+    Stop Propagation
+</label>
+
+<div @onclick="OnSelectParentDiv">
+    <h3>Parent div</h3>
+
+    <div @onclick="OnSelectChildDiv">
+        Child div that doesn't stop propagation when selected.
+    </div>
+
+    <div @onclick="OnSelectChildDiv" @onclick:stopPropagation="stopPropagation">
+        Child div that stops propagation when selected.
+    </div>
+</div>
+
+@code {
+    private bool stopPropagation = false;
+
+    private void OnSelectParentDiv() => 
+        Console.WriteLine($"The parent div was selected. {DateTime.Now}");
+    private void OnSelectChildDiv() => 
+        Console.WriteLine($"A child div was selected. {DateTime.Now}");
+}
