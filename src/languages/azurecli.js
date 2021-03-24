@@ -49,7 +49,7 @@ Author: Duncan Mackenzie <duncanma@duncanmackenzie.net>
     lexemes: /\b[a-zA-Z][a-zA-Z0-9_-]*\b/,
     keywords: {
         keyword:
-        'azure az ' + 
+        'azure az azsphere ' + 
         'help login logout admin-username ssh-key-value public-ip-address-dns-name resource-group location name portal telemetry account list show set clear env add delete ' +
 'batch create sync-autostorage-keys keys renew application list-summary ' +
 'show-summary package activate certificate task-file download node-file job enable ' +
