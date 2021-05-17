@@ -45,7 +45,7 @@ Author: Duncan Mackenzie <duncanma@duncanmackenzie.net>
     };
 
   return {
-    aliases: ['azurecli', 'azure', 'azurespcli'],
+    aliases: ['azurecli', 'azure', 'azsphere'],
     lexemes: /\b[a-zA-Z][a-zA-Z0-9_-]*\b/,
     keywords: {
         keyword:
