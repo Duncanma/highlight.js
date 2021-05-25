@@ -1,0 +1,12 @@
+<span class="hljs-variable"><span class="hljs-keyword">resource</span></span> <span class="hljs-variable">test</span> <span class="hljs-string">'Microsoft.AAD/domainServices@2021-03-01'</span> = {
+  <span class="hljs-property">name</span>: <span class="hljs-string">'asdfsdf'</span>
+  <span class="hljs-comment">// this is a comment</span>
+  <span class="hljs-property">properties</span>: {<span class="hljs-comment">/*comment*/</span>
+    <span class="hljs-property">domainConfigurationType</span><span class="hljs-comment">/*comment*/</span>:/*comment*/<span class="hljs-string">'as//notacomment!d/* also not a comment */fsdf'</span><span class="hljs-comment">// test!/*</span>
+    <span class="hljs-comment">/* multi
+    line
+    comment */</span> <span class="hljs-property">domainName</span>: /*
+    asdf*/<span class="hljs-string">'test'</span>
+    <span class="hljs-comment">// comment</span>
+  }
+}
