@@ -10,11 +10,11 @@ describe('.getLanguage()', function() {
     result.should.be.instanceOf(Object);
   });
 
-  it('should get the razor language by cshtml alias', function() {
-    const result = hljs.getLanguage('cshtml');
+  it('should get the cshtml language by razor alias', function() {
+    const result = hljs.getLanguage('razor');
 
     result.should.be.instanceOf(Object);
-    result.should.have.property('aliases').with.containEql('razor');
+    result.should.have.property('aliases').with.containEql('cshtml');
   });
 
   it('should be case insensitive', function() {
@@ -39,6 +39,7 @@ describe('.getLanguage()', function() {
     const result = hljs.getLanguage('c#');
 
     result.should.be.instanceOf(Object);
-    result.should.have.property('aliases').with.containEql('csharp');
+    result.should.have.property('aliases').with.containEql('cs');
+    should.strictEqual(result, hljs.getLanguage('csharp'))
   });
 });

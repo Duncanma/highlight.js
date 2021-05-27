@@ -1,7 +1,7 @@
 /*
 Language: CSHTML
-Requires: xml.js, cs.js
-Author: Roman Resh <romanresh@live.com>
+Requires: xml.js, csharp.js
+Author: Roman Resh <romanresh@live.com>, Scott Addie <scott.addie@microsoft.com>
 Category: common
 */
 
@@ -28,14 +28,14 @@ function(hljs) {
     };
 
     var DIRECTIVES = {
-        begin: "^@(addTagHelper|attribute|implements|inherits|inject|model|namespace|using)[^\\r\\n{\\(]*$",
+        begin: "^@(addTagHelper|attribute|implements|inherits|inject|layout|model|namespace|page|preservewhitespace|removeTagHelper|tagHelperPrefix|typeparam|using)?$",
         end: "$",
         className: SPECIAL_SYMBOL_CLASSNAME,
         returnBegin: true,
         returnEnd: true,
         contains: [
             {
-                begin: "@(addTagHelper|attribute|implements|inherits|inject|model|namespace|using)",
+                begin: "@(addTagHelper|attribute|implements|inherits|inject|layout|model|namespace|page|preservewhitespace|removeTagHelper|tagHelperPrefix|typeparam|using)",
                 className: SPECIAL_SYMBOL_CLASSNAME,
             },
             {
@@ -66,7 +66,7 @@ function(hljs) {
         begin: "@[a-zA-Z]+",
         returnBegin: true,
         end: "(\\r|\\n|<|\\s)",
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         contains: [
             {
                 begin: '@',
@@ -87,7 +87,7 @@ function(hljs) {
     var ONE_LINE_AWAIT = {
         begin: "@await ",
         returnBegin: true,
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         end: "(\\r|\\n|<|\\s)",
         contains: [
             {
@@ -106,7 +106,7 @@ function(hljs) {
         end: "\\)",
         returnBegin: true,
         returnEnd: true,
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         contains: [
             {
                 begin: "@\\(",
@@ -115,7 +115,7 @@ function(hljs) {
             {
                 begin: "\\(",
                 end: "\\)",
-                subLanguage: 'cs',
+                subLanguage: 'csharp',
                 contains: [hljs.QUOTE_STRING_MODE, BLOCK_TEXT, 'self']
             },
             BLOCK_TEXT,
@@ -132,7 +132,7 @@ function(hljs) {
         returnBegin: true,
         returnEnd: true,
         end: "\\}",
-        subLanguage: 'cs',
+        subLanguage: 'csharp',
         contains: [
             {
                 begin: "@\\{",
@@ -153,34 +153,14 @@ function(hljs) {
     };
 
     var BUILT_IN_CODE_BLOCKS_VARIANTS = [
-        {
-            begin: "@for[\\s]*\\([^{]+[\\s]*{",
-            end: "}"
-        },
-        {
-            begin: "@if[\\s]*\\([^{]+[\\s]*{",
-            end: "}"
-        },
-        {
-            begin: "@switch[\\s]*\\([^{]+[\\s]*{",
-            end: "}"
-        },
-        {
-            begin: "@while[\\s]*\\([^{]+[\\s]*{",
-            end: "}"
-        },
-        {
-            begin: "@using[\\s]*\\([^{]+[\\s]*{",
-            end: "}"
-        },
-        {
-            begin: "@lock[\\s]*\\([^{]+[\\s]*{",
-            end: "}"
-        },
-        {
-            begin: "@foreach[\\s]*\\([^{]+[\\s]*{",
-            end: "}"
-        },
+      {
+          begin: "@(for|foreach|if|lock|switch|using|while)[\\s]*\\([^{]+[\\s]*",
+          end: "}"
+      },
+      {
+          begin: "@do[\\s]*[^{]+",
+          end: "}"
+      }
     ];
 
     var BUILT_IN_CODE_BLOCKS = {
@@ -203,7 +183,7 @@ function(hljs) {
                             return {
                                 begin: v.begin.substr(1, v.begin.length - 2)
                             }; }), 
-                         subLanguage: "cs" },
+                         subLanguage: "csharp" },
                      { begin: "{", className: SPECIAL_SYMBOL_CLASSNAME }
                 ]
             },
@@ -213,7 +193,6 @@ function(hljs) {
                 contains: [hljs.QUOTE_STRING_MODE, 'self']
             },
             BLOCK_TEXT,
-
             {
                 variants: [
                     {
@@ -238,7 +217,7 @@ function(hljs) {
                                 begin: "[\\s]*else[\\s]*",
                             },
                         ],
-                        subLanguage: "cs"
+                        subLanguage: "csharp"
                     },
                     {
                         begin: "{",
@@ -246,7 +225,6 @@ function(hljs) {
                     }
                 ]
             },
-
             {
                 begin: "}",
                 className: SPECIAL_SYMBOL_CLASSNAME,
@@ -256,74 +234,74 @@ function(hljs) {
     };
 
     var BLOCK_TRY = {
-        begin: "@try[\\s]*{",
-        end: "}",
-        returnBegin: true,
-        returnEnd: true,
-        subLanguage: "cs",
-        contains: [
-            {
-                begin: "@",
-                className: SPECIAL_SYMBOL_CLASSNAME
-            },
-            {
-                begin: "try[\\s]*{",
-                subLanguage: "cs"
-            },
-            {
-                begin: "{",
-                end: "}",
-                contains: [hljs.QUOTE_STRING_MODE, 'self']
-            },
-            {
-                variants: [
-                    {
-                        begin: "}[\\s]*catch[\\s]*\\([^\\)]+\\)[\\s]*{"
-                    },
-                    {
-                        begin: "}[\\s]*finally[\\s]*{"
-                    }
-                ],
-                returnBegin: true,
-                contains: [
-                    {
-                        begin: "}",
-                        className: SPECIAL_SYMBOL_CLASSNAME
-                    },
-                    {
-                        variants: [
-                            {
-                                begin: "[\\s]*catch[\\s]*\\([^\\)]+\\)[\\s]*",
-                            },
-                            {
-                                begin: "[\\s]*finally[\\s]*",
-                            },
-                        ],
-                        subLanguage: "cs"
-                    },
-                    {
-                        begin: "{",
-                        className: SPECIAL_SYMBOL_CLASSNAME
-                    }
-                ]
-            },
-            {
-                begin: "}",
-                className: SPECIAL_SYMBOL_CLASSNAME,
-                endsParent: true
-            },
-        ]
+      begin: "@try[\\s]*{",
+      end: "}",
+      returnBegin: true,
+      returnEnd: true,
+      subLanguage: "csharp",
+      contains: [
+          {
+              begin: "@",
+              className: SPECIAL_SYMBOL_CLASSNAME
+          },
+          {
+              begin: "try[\\s]*{",
+              subLanguage: "csharp"
+          },
+          {
+              begin: "{",
+              end: "}",
+              contains: [hljs.QUOTE_STRING_MODE, 'self']
+          },
+          {      
+              variants: [
+                  {
+                      begin: "}[\\s]*catch[\\s]*\\([^\\)]+\\)[\\s]*{"
+                  },
+                  {
+                      begin: "}[\\s]*finally[\\s]*{"
+                  }
+              ],
+              returnBegin: true,
+              contains: [
+                  {
+                      begin: "}",
+                      className: SPECIAL_SYMBOL_CLASSNAME
+                  },
+                  {
+                      variants: [
+                          {
+                              begin: "[\\s]*catch[\\s]*\\([^\\)]+\\)[\\s]*",
+                          },
+                          {
+                              begin: "[\\s]*finally[\\s]*",
+                          },
+                      ],
+                      subLanguage: "csharp"
+                  },
+                  {
+                      begin: "{",
+                      className: SPECIAL_SYMBOL_CLASSNAME
+                  }
+              ]
+          },
+          {
+              begin: "}",
+              className: SPECIAL_SYMBOL_CLASSNAME,
+              endsParent: true
+          },
+      ]
     };
 
     var BLOCK_FUNCTIONS = {
-        begin: "@functions[\\s]*{",
+        begin: "@(code|functions)[\\s]*{",
         end: "}",
         returnBegin: true,
         returnEnd: true,
-        subLanguage: "cs",
+        subLanguage: "csharp",
         contains: [
             {
-                begin: "@functions[\\s]*{",
+                begin: "@(code|functions)[\\s]*{",
                 className: SPECIAL_SYMBOL_CLASSNAME
             },
             {
@@ -337,6 +315,62 @@ function(hljs) {
                 endsParent: true
             }
         ]
+    };
+
+    var RAZOR_COMPONENTS = {
+      begin: "<[A-Z]{1}[a-zA-Z]+",
+      end: ">",
+      returnBegin: true,
+      returnEnd: true,
+      subLanguage: "xml",
+      contains: [
+        {
+          begin: "<\\/{1}[A-Z]{1}[a-zA-Z]+",
+          className: "tag"
+        }
+      ]
+    };
+
+    var BIND_DIRECTIVES = {
+      begin: "@bind(-|:)?[a-zA-Z:]*",
+      end: "=",
+      returnBegin: true,
+      returnEnd: false,
+      subLanguage: "cshtml",
+      contains: [
+        {
+          begin: "@bind(-|:)?[a-zA-Z:]*",
+          className: SPECIAL_SYMBOL_CLASSNAME
+        }
+      ]
+    };
+
+    var ON_EVENT_DIRECTIVE_ATTRIBUTE = {
+      begin: "@on[a-zA-Z]*(:preventDefault|:stopPropagation)?",
+      returnBegin: true,
+      returnEnd: false,
+      subLanguage: "cshtml",
+      end: "(=|\\s)",
+      contains: [
+        {
+            begin: "@on[a-zA-Z]*(:preventDefault|:stopPropagation)?",
+            className: SPECIAL_SYMBOL_CLASSNAME
+        }
+      ]
+    };
+
+    var DIRECTIVE_ATTRIBUTES = {
+      begin: "@(attributes|key|ref)",
+      returnBegin: true,
+      returnEnd: false,
+      subLanguage: "cshtml",
+      end: "=",
+      contains: [
+        {
+          begin: "@(attributes|key|ref)",
+          className: SPECIAL_SYMBOL_CLASSNAME
+        }
+      ]
     };
 
     var BLOCK_SECTION = {
@@ -365,11 +399,15 @@ function(hljs) {
 
     return {
         subLanguage: 'xml',
-        aliases: ['razor'],
+        aliases: ['cshtml', 'razor'],
         contains: [
             hljs.COMMENT("@\\*", "\\*@"),
             EXCEPTIONS,
             DIRECTIVES,
+            DIRECTIVE_ATTRIBUTES,
+            BIND_DIRECTIVES,
+            ON_EVENT_DIRECTIVE_ATTRIBUTE,
+            RAZOR_COMPONENTS,
             BLOCK_FUNCTIONS,
             BLOCK_SECTION,
             BLOCK_TRY,

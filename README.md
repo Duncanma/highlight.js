@@ -4,7 +4,7 @@
 
 Highlight.js is a syntax highlighter written in JavaScript. It works in
 the browser as well as on the server. It works with pretty much any
-markup, doesn’t depend on any framework, and has automatic language
+markup, doesn't depend on any framework, and has automatic language
 detection.
 
 ## Getting Started
@@ -20,7 +20,7 @@ library along with one of the styles and calling
 ```
 
 This will find and highlight code inside of `<pre><code>` tags; it tries
-to detect the language automatically. If automatic detection doesn’t
+to detect the language automatically. If automatic detection doesn't
 work for you, you can specify the language in the `class` attribute:
 
 ```html
@@ -55,7 +55,7 @@ work for you, you can specify the language in the `class` attribute:
 | Basic                   | basic                  |         |
 | BNF                     | bnf                    |         |
 | Brainfuck               | brainfuck, bf          |         |
-| C#                      | cs, csharp             |         |
+| C#                      | csharp, cs             |         |
 | C++                     | cpp, c, cc, h, c++, h++, hpp |   |
 | C/AL                    | cal                    |         |
 | Cache Object Script     | cos, cls               |         |
@@ -63,7 +63,7 @@ work for you, you can specify the language in the `class` attribute:
 | Coq                     | coq                    |         |
 | CSP                     | csp                    |         |
 | CSS                     | css                    |         |
-| Cap’n Proto             | capnproto, capnp       |         |
+| Cap'n Proto             | capnproto, capnp       |         |
 | Clojure                 | clojure, clj           |         |
 | CoffeeScript            | coffeescript, coffee, cson, iced | |
 | Crmsh                   | crmsh, crm, pcmk       |         |
@@ -236,7 +236,7 @@ When you need a bit more control over the initialization of
 highlight.js, you can use the [`highlightBlock`][3] and [`configure`][4]
 functions. This allows you to control *what* to highlight and *when*.
 
-Here’s an equivalent way to calling [`initHighlightingOnLoad`][1] using
+Here's an equivalent way to calling [`initHighlightingOnLoad`][1] using
 vanilla JS:
 
 ```js

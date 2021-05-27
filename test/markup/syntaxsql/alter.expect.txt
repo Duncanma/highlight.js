@@ -1,4 +1,4 @@
-<span class="hljs-comment">-- Syntax for SQL Server and Azure SQL Database  </span>
+<span class="hljs-comment">-- Syntax for SQL Server and Azure SQL Database</span>
 
 <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">CERTIFICATE</span> <span class="hljs-variable">certificate_name</span>
       <span class="hljs-keyword">REMOVE</span> <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>

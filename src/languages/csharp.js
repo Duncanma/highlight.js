@@ -1,27 +1,138 @@
 /*
 Language: C#
 Author: Jason Diamond <jason@diamond.name>
-Contributor: Nicolas LLOBERA <nllobera@gmail.com>, Pieter Vantorre <pietervantorre@gmail.com>
+Contributor: Nicolas LLOBERA <nllobera@gmail.com>, Pieter Vantorre <pietervantorre@gmail.com>, David Pine <david.pine@microsoft.com>
 Category: common
 */
 
 function(hljs) {
-  var KEYWORDS = {
-    keyword:
-      // Normal keywords.
-      'abstract as base bool break byte case catch char checked const continue decimal ' +
-      'default delegate do double enum event explicit extern finally fixed float ' +
-      'for foreach goto if implicit in int interface internal init is lock long ' +
-      'object operator out override params private protected public readonly record ref sbyte ' +
-      'sealed short sizeof stackalloc static string struct switch this try typeof ' +
-      'uint ulong unchecked unsafe ushort using virtual void volatile while ' +
-      // Contextual keywords.
-      'add alias ascending async await by descending dynamic equals from get global group into join ' +
-      'let nameof on orderby partial remove select set value var when where yield',
-    literal:
-      'null false true'
+  const BUILT_IN_KEYWORDS = [
+      'bool',
+      'byte',
+      'char',
+      'decimal',
+      'delegate',
+      'double',
+      'dynamic',
+      'enum',
+      'float',
+      'int',
+      'long',
+      'nint',
+      'nuint',
+      'object',
+      'sbyte',
+      'short',
+      'string',
+      'ulong',
+      'unit',
+      'ushort'
+  ];
+  const LITERAL_KEYWORDS = [
+      'default',
+      'false',
+      'null',
+      'true'
+  ];
+  const NORMAL_KEYWORDS = [
+    'abstract',
+    'as',
+    'base',
+    'break',
+    'case',
+    'class',
+    'const',
+    'continue',
+    'do',
+    'else',
+    'event',
+    'explicit',
+    'extern',
+    'finally',
+    'fixed',
+    'for',
+    'foreach',
+    'goto',
+    'if',
+    'implicit',
+    'in',
+    'interface',
+    'internal',
+    'is',
+    'lock',
+    'namespace',
+    'new',
+    'operator',
+    'out',
+    'override',
+    'params',
+    'private',
+    'protected',
+    'public',
+    'readonly',
+    'record',
+    'ref',
+    'return',
+    'sealed',
+    'sizeof',
+    'stackalloc',
+    'static',
+    'struct',
+    'switch',
+    'this',
+    'throw',
+    'try',
+    'typeof',
+    'unchecked',
+    'unsafe',
+    'using',
+    'virtual',
+    'void',
+    'volatile',
+    'while'
+  ];
+  const CONTEXTUAL_KEYWORDS = [
+    'add',
+    'alias',
+    'and',
+    'ascending',
+    'async',
+    'await',
+    'by',
+    'descending',
+    'equals',
+    'from',
+    'get',
+    'global',
+    'group',
+    'init',
+    'into',
+    'join',
+    'let',
+    'nameof',
+    'not',
+    'notnull',
+    'on',
+    'or',
+    'orderby',
+    'partial',
+    'remove',
+    'select',
+    'set',
+    'unmanaged',
+    'value',
+    'var',
+    'when',
+    'where',
+    'with',
+    'yield'
+  ];
+  const KEYWORDS = {
+    keyword: NORMAL_KEYWORDS.concat(CONTEXTUAL_KEYWORDS).join(' '),
+    built_in: BUILT_IN_KEYWORDS.join(' '),
+    literal: LITERAL_KEYWORDS.join(' ')
   };
-  var NUMBERS = {
+  const NUMBERS = {
     className: 'number',
     variants: [
       { begin: '\\b(0b[01\']+)' },
@@ -30,30 +141,30 @@ function(hljs) {
     ],
     relevance: 0
   };
-  var VERBATIM_STRING = {
+  const VERBATIM_STRING = {
     className: 'string',
     begin: '@"', end: '"',
     contains: [{begin: '""'}]
   };
-  var VERBATIM_STRING_NO_LF = hljs.inherit(VERBATIM_STRING, {illegal: /\n/});
-  var SUBST = {
+  const VERBATIM_STRING_NO_LF = hljs.inherit(VERBATIM_STRING, {illegal: /\n/});
+  const SUBST = {
     className: 'subst',
     begin: '{', end: '}',
     keywords: KEYWORDS
   };
-  var SUBST_NO_LF = hljs.inherit(SUBST, {illegal: /\n/});
-  var INTERPOLATED_STRING = {
+  const SUBST_NO_LF = hljs.inherit(SUBST, {illegal: /\n/});
+  const INTERPOLATED_STRING = {
     className: 'string',
     begin: /\$"/, end: '"',
     illegal: /\n/,
     contains: [{begin: '{{'}, {begin: '}}'}, hljs.BACKSLASH_ESCAPE, SUBST_NO_LF]
   };
-  var INTERPOLATED_VERBATIM_STRING = {
+  const INTERPOLATED_VERBATIM_STRING = {
     className: 'string',
     begin: /\$@"/, end: '"',
     contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST]
   };
-  var INTERPOLATED_VERBATIM_STRING_NO_LF = hljs.inherit(INTERPOLATED_VERBATIM_STRING, {
+  const INTERPOLATED_VERBATIM_STRING_NO_LF = hljs.inherit(INTERPOLATED_VERBATIM_STRING, {
     illegal: /\n/,
     contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST_NO_LF]
   });
@@ -75,7 +186,7 @@ function(hljs) {
     NUMBERS,
     hljs.inherit(hljs.C_BLOCK_COMMENT_MODE, {illegal: /\n/})
   ];
-  var STRING = {
+  const STRING = {
     variants: [
       INTERPOLATED_VERBATIM_STRING,
       INTERPOLATED_STRING,
@@ -85,10 +196,10 @@ function(hljs) {
     ]
   };
 
-  var TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
+  const TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
 
   return {
-    aliases: ['csharp', 'c#'],
+    aliases: ['cs', 'c#'],
     keywords: KEYWORDS,
     illegal: /::/,
     contains: [
