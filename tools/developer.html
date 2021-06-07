@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <title>highlight.js developer</title>
 
-  <link rel="stylesheet" href="../src/styles/default.css">
-
+  <link rel="stylesheet" href="https://static.docs.com/latest/site/en-us/styles/site-ltr.css">
   <style>
     .editor textarea {
       display: block; width: 100%;
       height: 15em;
+    }
+    .editor section {
+      margin: 64px;
     }
 
     pre code,
@@ -39,6 +41,32 @@
         Language: <select class="languages"><option value="">(Auto)</option></select>
       </p>
     </div>
+
+    <section class="container is-fluid has-default-focus">
+      <div class="columns">
+        <div class="column theme theme-light">
+          <h2>Light</h2>
+          <div class="content">
+            <pre><code class="hljs">...</code></pre>
+          </div>
+        </div>
+        <div class="column theme theme-dark">
+          <h2>Dark</h2>
+          <div class="content">
+            <pre><code class="hljs">...</code></pre>
+          </div>
+        </div>
+        <div class="column theme theme-high-contrast">
+          <h2>High Contrast</h2>
+          <div class="content">
+            <pre><code class="hljs">...</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+
     <div>
       <p>Rendered in <span class="rendering_time">...</span> ms [<span class="rendering_stats">...</span>]</p>
       <pre><code class="hljs">...</code></pre>
@@ -50,7 +78,6 @@
   </div>
 
   <script src="../build/highlight.pack.js"></script>
-  <!-- <script src="https://static.docs.com/ui/third-party/highlight.js/9.15.10/highlight.js"></script> -->
   <script src="../demo/jquery-2.1.1.min.js"></script>
 
   <script>
