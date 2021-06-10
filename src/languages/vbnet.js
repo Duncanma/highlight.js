@@ -89,7 +89,6 @@ function(hljs) {
       INTERPOLATED_VERBATIM_STRING,
       INTERPOLATED_STRING,
       VERBATIM_STRING,
-      hljs.APOS_STRING_MODE,
       hljs.QUOTE_STRING_MODE
     ]
   };
