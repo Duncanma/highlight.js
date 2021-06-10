@@ -20,7 +20,7 @@ Author: Duncan Mackenzie <duncanma@duncanmackenzie.net>
       // Match command line parameters (-p, -u)
       className: 'parameter',
       variants: [ //single dash, double dash, double dash in square brackets
-        {begin: ' -{1,2}[a-zA-Z\-]*'},
+        {begin: '-{1,2}[a-zA-Z\-]*'},
         {begin: '--[a-zA-Z\-]*'},
         {begin: '\[--[a-zA-Z\-]*\]'},
         {begin: '\[a-z_]+\.[a-z_]+='}
