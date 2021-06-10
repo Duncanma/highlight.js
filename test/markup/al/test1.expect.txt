@@ -1,0 +1,13 @@
+<span class="hljs-comment"><span class="hljs-doctag">///</span> &lt;summary&gt;</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Adds the Loyalty field to the General group on the "Customer Card"</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> &lt;/summary&gt;</span>
+<span class="hljs-class"><span class="hljs-keyword">pageextension</span> <span class="hljs-number">50100</span> <span class="hljs-title">LoyaltyCustCardExt</span> <span class="hljs-keyword">extends</span> "<span class="hljs-title">Customer</span> <span class="hljs-title">Card</span>"
+{</span>
+    <span class="hljs-keyword">layout</span>
+    {
+        <span class="hljs-keyword">addlast</span>(General)
+        {
+            <span class="hljs-keyword">field</span>(Loyalty; Rec.Loyalty) { }
+        }
+    }
+}

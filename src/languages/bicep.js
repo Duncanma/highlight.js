@@ -5,7 +5,7 @@
  Origin: https://github.com/Azure/bicep/blob/73e9b16ada824e39bbbfce025979d8def9d4ede3/src/highlightjs/src/bicep.ts
  */
 
- function(hljs) {
+ function bicep(hljs) {
     var bounded = function (text) { return "\\b" + text + "\\b"; };
     var after = function (regex) { return "(?<=" + regex + ")"; };
     var notAfter = function (regex) { return "(?<!" + regex + ")"; };
