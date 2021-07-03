@@ -74,7 +74,7 @@
     };
     var stringSubstitution = {
         className: 'subst',
-        begin: notAfter("\\\\") + "(\\${)",
+        begin: "(\\${)",
         end: "(})",
         contains: withComments([expression]),
     };
