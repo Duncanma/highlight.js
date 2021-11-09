@@ -59,7 +59,6 @@
         return input.concat(comments);
     }
     var expression = {
-        keywords: KEYWORDS,
         variants: [
         /* placeholder filled later due to cycle*/
         ],
@@ -99,6 +98,7 @@
     var identifierExpression = {
         className: "variable",
         begin: "" + identifier + notBefore(ws + "\\("),
+        keywords: KEYWORDS,
     };
     var objectPropertyKeyIdentifier = {
         className: "property",
@@ -132,6 +132,7 @@
         begin: "(" + identifier + ")" + ws + "\\(",
         end: "\\)",
         contains: withComments([expression]),
+        keywords: KEYWORDS,
     };
     var decorator = {
         className: 'meta',
